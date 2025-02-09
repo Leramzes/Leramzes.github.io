@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>💌 Carta Mágica 💌</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@600&family=Poppins:wght@400;600&display=swap');
+
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background: linear-gradient(135deg, #ff9a9e, #fad0c4);
+            font-family: 'Poppins', sans-serif;
+            color: white;
+            margin: 0;
+            overflow: hidden;
+        }
+
+        .container {
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            width: 100%;
+            max-width: 600px;
+        }
+
+        .envelope {
+            position: relative;
+            width: 100%;
+            max-width: 550px;
+            height: 400px;
+            background: #ff85a2;
+            border-radius: 10px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            box-shadow: 0 8px 15px rgba(0, 0, 0, 0.3);
+            transition: transform 0.4s ease-in-out;
+        }
+
+        .envelope:hover {
+            transform: scale(1.05);
+        }
+
+        .flap {
+            position: absolute;
+            top: 0;
+            width: 100%;
+            height: 50%;
+            background: #ff5c8a;
+            border-top-left-radius: 10px;
+            border-top-right-radius: 10px;
+            transform-origin: top;
+            transition: transform 0.6s ease-in-out;
+        }
+
+        .letter {
+            position: absolute;
+            width: 90%;
+            max-width: 500px;
+            background: white;
+            border-radius: 10px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.6s ease, transform 0.6s ease;
+            box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+            padding: 20px;
+            text-align: center;
+        }
+
+        .letter h2 {
+            font-size: 1.5em;
+            font-family: 'Dancing Script', cursive;
+            color: #ff5c8a;
+            margin-bottom: 15px;
+        }
+
+        .video-container {
+            width: 100%;
+            max-width: 400px;
+            height: auto;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .video-container video {
+            width: 100%;
+            border-radius: 10px;
+            object-fit: cover;
+        }
+
+        .buttons {
+            margin-top: 15px;
+            display: flex;
+            gap: 15px;
+        }
+
+        .buttons button {
+            padding: 10px 18px;
+            font-size: 16px;
+            border: none;
+            cursor: pointer;
+            border-radius: 8px;
+            transition: 0.3s;
+        }
+
+        .yes {
+            background-color: #ff85a2;
+            color: white;
+            box-shadow: 0 4px 10px rgba(255, 133, 162, 0.5);
+        }
+        .yes:hover {
+            background-color: #ff5c8a;
+        }
+        .no {
+            background-color: #e74c3c;
+            color: white;
+        }
+        .no:hover {
+            background-color: #c0392b;
+        }
+
+        .open .flap {
+            transform: rotateX(180deg);
+        }
+
+        .open .letter {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        .video-custom {
+            width: 100%;
+            height: 250px; /* Ajusta esto según lo necesites */
+            object-fit: cover; /* Para recortar el video si es necesario */
+            border-radius: 20px;
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.3);
+        }
+
+        /* RESPONSIVE */
+        @media (max-width: 600px) {
+            .envelope {
+                height: 350px;
+            }
+            .letter {
+                width: 95%;
+                padding: 15px;
+            }
+            .letter h2 {
+                font-size: 1.2em;
+            }
+            .video-container {
+                max-width: 300px;
+            }
+            .buttons button {
+                font-size: 14px;
+                padding: 8px 14px;
+            }
+        }
+
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="envelope" onclick="openLetter()">
+            <div class="flap"></div>
+            <div class="letter">
+                <h2>¿Me harías el honor de ser tu San Valentín? 💜</h2>
+                <div class="video-container">
+                    <video loop playsinline class="video-custom">
+                        <source src="img/videichonfinal.mp4" type="video/mp4">
+                        Tu navegador no soporta videos.
+                    </video>
+                </div>
+                <div class="buttons">
+                    <button class="yes" onclick="respuesta('sí')">Shí 💖</button>
+                    <button class="no" onclick="respuesta('no')">No 😢</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+        function openLetter() {
+            let envelope = document.querySelector('.envelope');
+            let video = document.querySelector('.video-custom');
+
+            envelope.classList.add('open'); // Abre la carta
+            video.muted = false; // Activa el sonido
+            video.play(); // Asegura que el video se reproduzca
+        }
+    
+        function respuesta(opcion) {
+            if (opcion === 'sí') {
+                window.location.href = "acept.html";
+                //redirigir a un index
+            } else {
+                let botonNo = document.querySelector('.no');
+                botonNo.textContent = 'AHORA YA NO HAY NO 😈';
+                botonNo.style.backgroundColor = '#ff85a2'; // Cambia el color al de "Sí"
+                botonNo.style.boxShadow = '0 4px 10px rgba(255, 133, 162, 0.5)';
+                botonNo.onclick = () => respuesta('sí'); // Ahora, si lo vuelven a presionar, contará como un "Sí"
+            }
+        }
+    </script>
+</body>
+</html>
